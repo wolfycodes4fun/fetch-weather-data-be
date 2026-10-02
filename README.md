@@ -22,28 +22,38 @@ A **Multi-Criteria Weighted Scoring Algorithm** using **Piecewise Penalty Functi
 The penalty for each unit over or under the ideal range for each metric is defined as follows:  
 
 <table>
+    <thead>
+        <tr>
+            <th>Metric</th>
+            <th colspan="2">Unbearbale bounds</th>
+            <th>Unbearable upper bound</th>
+            <th>Unbearable lower bound</th>
+            <th>Penalty</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+The penalties in the table above were calculated with the formula:  
+
+penalty = 100 / unbearable (upper || lower) bound - (upper || lower) bound
+<table>
   <thead>
     <tr>
-      <th>Category</th>
-      <th>Feature</th>
-      <th>Description</th>
+      <th colspan="2">Main Category (Spans 2 Columns)</th>
+      <th>Details</th>
     </tr>
   </thead>
   <tbody>
-    <!-- Merged Row across 2 rows -->
     <tr>
-      <td rowspan="2">Core Engine</td>
-      <td>Speed</td>
-      <td>Optimized for fast execution.</td>
+      <td>Item A</td>
+      <td>Item B</td>
+      <td>Description for items A and B</td>
     </tr>
     <tr>
-      <td>Memory</td>
-      <td>Low footprint usage.</td>
-    </tr>
-    <!-- Merged Column across 2 columns -->
-    <tr>
-      <td>Extensions</td>
-      <td colspan="2">Supported via plugins and custom hooks.</td>
+      <td colspan="2" align="center"><b>All Systems Operational (Spans 2 Columns)</b></td>
+      <td>Active</td>
     </tr>
   </tbody>
 </table>
