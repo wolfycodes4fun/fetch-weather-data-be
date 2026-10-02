@@ -29,3 +29,6 @@ def fetch_weather_data(city):
     response = requests.get(f"{OPEN_WEATHER_MAP_FETCH_WEATHER_API_ENDPOINT}?lat={latitude}&lon={longitude}&appid={OPEN_WEATHER_MAP_API_KEY}")
 
     return response.json()
+
+def calculate_comfort_index(temperature, humidity, wind_speed, cloudiness, pressure, visibility):
+    pass
