@@ -1,7 +1,8 @@
 import pytest
 from app import app
 
-def test_weather_data_response():
+def test_get_weather_data_response():
+    
     with app.test_client() as client:
         response = client.get('/weather/api/v1/fetchforcity/London')
         assert response.status_code == 200
