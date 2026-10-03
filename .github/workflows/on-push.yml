@@ -38,6 +38,7 @@ jobs:
   
   build-and-publish-image:
     needs: lint-and-test
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Repo checkout
