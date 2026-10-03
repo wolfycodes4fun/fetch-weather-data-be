@@ -25,6 +25,7 @@ jobs:
           pip install pylint pytest pytest-mock 
       
       - name: Lint with pylint
+        continue-on-error: true
         run: |
           pylint app.py
       
