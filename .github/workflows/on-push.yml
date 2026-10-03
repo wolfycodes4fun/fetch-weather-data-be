@@ -64,7 +64,7 @@ jobs:
           curl -L \
           -X PATCH \
           -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+          -H "Authorization: Bearer ${{ secrets.GH_COMMON_VARIABLES_TOKEN }}" \
           -H "X-Github-Api-Version: 2026-03-10" \
           "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/variables/IMAGE_VERSION" \
           -d '{"name": "IMAGE_VERSION", "value": "'"$UPDATED_IMAGE_VERSION"'"}'
