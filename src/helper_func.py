@@ -1,18 +1,23 @@
-import os
-
 import requests
 
-from app import OPEN_WEATHER_MAP_API_KEY, OPEN_WEATHER_MAP_GEOCODING_API_ENDPOINT
-
-def fetch_city_coordinates(city_name):
-
+def fetch_city_coordinates(city_name, api_key):
+    """Fetches latitude & longitude for a given city using the OpenWeatherMap API
+    Args:
+        city_name (str): The name of the city for which to fetch coordinates.
+        api_key (str): The API key for accessing the OpenWeatherMap API.
+    Returns:
+        tuple: A tuple containing the latitude and longitude of the specified city.
+    """
+    open_weather_map_geocoding_api_endpoint = "http://api.openweathermap.org/geo/1.0/direct"
     geocoding_endpoint_params = {
         "q": city_name,
         "limit": 1,
-        "appid": OPEN_WEATHER_MAP_API_KEY
+        "appid": api_key
     }
     response = requests.get(
-        f"{OPEN_WEATHER_MAP_GEOCODING_API_ENDPOINT}", params=geocoding_endpoint_params
+        f"{open_weather_map_geocoding_api_endpoint}",
+        params=geocoding_endpoint_params,
+        timeout=10
     )
 
     # Decode the JSON response
@@ -22,7 +27,14 @@ def fetch_city_coordinates(city_name):
     return latitude, longitude
 
 def calculate_comfort_index(temperature, humidity, wind_speed):
-
+    """Calculates the comfort index for a given set of weather conditions.
+    Args:
+        temperature (float): The temperature in Kelvin.
+        humidity (float): The humidity as a percentage.
+        wind_speed (float): The wind speed in m/s.
+    Returns:
+        float: The calculated comfort index.
+    """
     s_temperature, s_humidity, s_wind_speed = None, None, None
 
     # Calculate sub-score for temperature
