@@ -28,7 +28,7 @@ jobs:
       - name: Lint with pylint
         continue-on-error: true
         run: |
-          pylint app.py
+          pylint src
       
       - name: Run tests with pytest
         env:

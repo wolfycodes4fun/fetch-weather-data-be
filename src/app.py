@@ -2,7 +2,7 @@ import os
 from flask import Flask
 import requests
 
-from helper_func import fetch_city_coordinates, calculate_comfort_index
+from src.helper_func import fetch_city_coordinates, calculate_comfort_index
 
 app = Flask(__name__)
 

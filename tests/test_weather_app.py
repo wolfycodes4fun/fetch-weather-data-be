@@ -1,10 +1,9 @@
-import pytest
 from src.app import app
 
 def test_get_weather_data_response():
     
     with app.test_client() as client:
-        response = client.get('/weather/api/v1/fetchforcity/London')
+        response = client.get('/yourweather/api/v1/fetchcity/London')
         assert response.status_code == 200
         data = response.get_json()
         assert "main" in data
@@ -12,3 +11,11 @@ def test_get_weather_data_response():
         assert "humidity" in data["main"]
         assert "wind" in data
         assert "speed" in data["wind"]
+
+def test_get_comfort_index_response():
+    with app.test_client() as client:
+        response = client.get('/yourweather/api/v1/comfortindex/London')
+        assert response.status_code == 200
+        data = response.get_json()
+        assert "comfort_index" in data
+        assert isinstance(data["comfort_index"], float)
