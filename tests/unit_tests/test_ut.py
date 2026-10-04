@@ -1,5 +1,5 @@
 import pytest
-from app import fetch_city_coordinates
+from src.app import fetch_city_coordinates
 
 def test_fetch_city_coordinates(mocker):
     # Intercept network calls made in app

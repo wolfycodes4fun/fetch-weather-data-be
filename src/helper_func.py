@@ -1,15 +1,19 @@
-from flask import Flask
-import requests
 import os
 
-app = Flask(__name__)
+import requests
 
-OPEN_WEATHER_MAP_API_KEY = os.getenv("OPEN_WEATHER_MAP_API_KEY")
-OPEN_WEATHER_MAP_GEOCODING_API_ENDPOINT = "http://api.openweathermap.org/geo/1.0/direct"
-OPEN_WEATHER_MAP_FETCH_WEATHER_API_ENDPOINT = "https://api.openweathermap.org/data/2.5/weather"
+from app import OPEN_WEATHER_MAP_API_KEY, OPEN_WEATHER_MAP_GEOCODING_API_ENDPOINT
 
 def fetch_city_coordinates(city_name):
-    response = requests.get(f"{OPEN_WEATHER_MAP_GEOCODING_API_ENDPOINT}?q={city_name}&limit=1&appid={OPEN_WEATHER_MAP_API_KEY}")
+
+    geocoding_endpoint_params = {
+        "q": city_name,
+        "limit": 1,
+        "appid": OPEN_WEATHER_MAP_API_KEY
+    }
+    response = requests.get(
+        f"{OPEN_WEATHER_MAP_GEOCODING_API_ENDPOINT}", params=geocoding_endpoint_params
+    )
 
     # Decode the JSON response
     response_data = response.json()
@@ -17,15 +21,9 @@ def fetch_city_coordinates(city_name):
 
     return latitude, longitude
 
-@app.route("/weather/api/v1/fetchforcity/<city>", methods=["GET"])
-def fetch_weather_data(city):
-    latitude, longitude = fetch_city_coordinates(city)
-
-    response = requests.get(f"{OPEN_WEATHER_MAP_FETCH_WEATHER_API_ENDPOINT}?lat={latitude}&lon={longitude}&appid={OPEN_WEATHER_MAP_API_KEY}")
-
-    return response.json()
-
 def calculate_comfort_index(temperature, humidity, wind_speed):
+
+    s_temperature, s_humidity, s_wind_speed = None, None, None
 
     # Calculate sub-score for temperature
     if 294.15 <= temperature <= 308.15:
@@ -53,17 +51,5 @@ def calculate_comfort_index(temperature, humidity, wind_speed):
 
     # Calculate overall comfort index with weighted metrics
     comfort_index = (0.5 * s_temperature) + (0.35 * s_humidity) + (0.15 * s_wind_speed)
-    
+
     return comfort_index
-
-@app.route("/weather/api/v1/comfortindex/<city>", methods=["GET"])
-def return_comfort_index(city):
-    weather_data = fetch_weather_data(city)
-
-    temperature = weather_data["main"]["feels_like"]
-    humidity = weather_data["main"]["humidity"]
-    wind_speed = weather_data["wind"]["speed"]
-
-    comfort_index = calculate_comfort_index(temperature, humidity, wind_speed)
-    
-    return {"comfort_index": comfort_index}
